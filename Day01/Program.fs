@@ -11,7 +11,7 @@ let addLineToSum sum line =
     match line with
     | Prefix "-" rest -> sum - (rest |> int)
     | Prefix "+" rest -> sum + (rest |> int) 
-    | _               -> sum
+    | _               -> raise (ArgumentException("There can not be any non ['-','+'] symbols here."))
 
 type State = {Sum : int; PastFreqs : Set<int>}
 

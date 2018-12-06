@@ -1026,7 +1026,6 @@ let data = @"+16
 -6
 -17
 -18
--137490
-"
+-137490"
 
 let dataLines = data.Split([|'\n'|]) |> List.ofArray
