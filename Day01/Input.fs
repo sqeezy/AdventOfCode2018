@@ -1029,4 +1029,4 @@ let data = @"+16
 -137490
 "
 
-let dataLines = data.Split([|'\n'|])
+let dataLines = data.Split([|'\n'|]) |> List.ofArray

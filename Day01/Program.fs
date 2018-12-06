@@ -13,9 +13,22 @@ let addLineToSum sum line =
     | Prefix "+" rest -> sum + (rest |> int) 
     | _               -> sum
 
+type State = {Sum : int; PastFreqs : Set<int>}
+
+let rec findFirstDoubleFreq {Sum=sum;PastFreqs = pastFreqs} currentLines =
+    let line :: lines = currentLines
+    let nextFreq = addLineToSum sum line
+    if Set.contains nextFreq pastFreqs then nextFreq
+    else 
+        let newPastFreqs = Set.add nextFreq pastFreqs
+        findFirstDoubleFreq {Sum=nextFreq; PastFreqs= newPastFreqs } lines
 
 [<EntryPoint>]
 let main argv =
-    let result = dataLines |> Seq.fold addLineToSum 0
-    printfn "%i" result
+    let result1 = dataLines |> Seq.fold addLineToSum 0
+    printfn "Part One Result: %i" result1
+
+    let loop = seq {while true do yield! dataLines} |> Seq.take 1000000 |> List.ofSeq
+    let result2 = findFirstDoubleFreq {Sum=0;PastFreqs=Set.empty} loop
+    printfn "Part Two Result: %i" result2
     0 // return an integer exit code
