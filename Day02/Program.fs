@@ -17,6 +17,26 @@ let solvePartOne list =
     let threes = twosAndThreesPresentPerLine |> Seq.filter (fun (_, b) -> b) |> Seq.length
     twos * threes
 
+let cartesianProduct n g = List.map (fun (n,g)->[n;g]) (List.allPairs n g)
+
+let differentByOne (a, b) = 
+    let compareElementwise = Seq.zip a b 
+                              |> Seq.map (fun (a,b)-> if a=b then None else Some (a,b))
+
+    let differentElements = compareElementwise
+                                  |> Seq.filter(Option.isSome)
+    let numOfDifferentElements = differentElements |> Seq.length
+
+    match numOfDifferentElements with
+    | 1 -> Some (Seq.head differentElements)
+    | _ -> None
+
+let solvePartTwo (list : string list) = cartesianProduct list list
+                                            |> Seq.map (fun l -> (l.[0].ToCharArray(), l.[1].ToCharArray()))
+                                            |> Seq.map differentByOne
+                                            |> Seq.filter Option.isSome
+
+
 [<EntryPoint>]
 let main argv =
     printfn "Part One Result: %d" (solvePartOne Input.dataLines)
