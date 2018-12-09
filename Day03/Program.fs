@@ -24,7 +24,6 @@ let cartesianProduct n g = List.map (fun (n,g)->(n,g)) (List.allPairs n g)
 let x = [1 .. 1000]
 
 let field = cartesianProduct x x 
-                |> List.filter (fun (x , y) -> (x <> y))
                 |> List.map (fun p -> (p, 0))
                 |> Map.ofList
 
