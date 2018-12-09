@@ -27,6 +27,9 @@ let field = cartesianProduct x x
                 |> List.map (fun p -> (p, 0))
                 |> Map.ofList
 
+let positionsOfClaim {LeftDist = ld; TopDist = td; Width = w; Height   = h;} =
+    cartesianProduct [ld .. w] [td .. h]
+
 [<EntryPoint>]
 let main argv =
 
