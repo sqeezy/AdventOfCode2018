@@ -252,4 +252,4 @@ rcxfqtyxzbldglnpkumawhijsc
 rvetqtyxzbojglnpkumewhijsc
 rvxfqtyxzbtdglnpkbmawhijsc"
 
-let dataLines = data.Split([|'\n'|]) |> List.ofArray
+let dataLines = data |> splitIntoLines

@@ -1235,4 +1235,4 @@ let data = @"#1 @ 565,109: 14x24
 #1232 @ 217,776: 25x19
 #1233 @ 923,156: 16x21"
 
-let dataLines = data.Split([|'\n'|]) |> List.ofArray
+let dataLines = data |> splitIntoLines

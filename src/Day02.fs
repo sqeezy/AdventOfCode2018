@@ -45,5 +45,5 @@ let solvePartTwo (list : string list) = cartesianProduct list list
                                             |> System.String
 
 let solve =
-    printfn "Part One Result: %d" (solvePartOne Day02Input.dataLines)
+    printfn "Part One Result: %A" (solvePartOne Day02Input.dataLines)
     printfn "Part Two Result: %A" (solvePartTwo Day02Input.dataLines )
