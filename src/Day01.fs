@@ -1,4 +1,6 @@
-﻿open System
+﻿module Day01
+
+open System
 
 let (|Prefix|_|) (p:string) (s:string) =
     if s.StartsWith(p) then
@@ -23,12 +25,10 @@ let rec findFirstDoubleFreq {Sum=sum;PastFreqs = pastFreqs} currentLines =
         let newPastFreqs = Set.add nextFreq pastFreqs
         findFirstDoubleFreq {Sum=nextFreq; PastFreqs= newPastFreqs } lines
 
-[<EntryPoint>]
-let main argv =
-    let result1 = dataLines |> Seq.fold addLineToSum 0
+let solve =
+    let result1 = Day01Input.dataLines |> Seq.fold addLineToSum 0
     printfn "Part One Result: %i" result1
 
-    let loop = seq {while true do yield! dataLines} |> Seq.take 1000000 |> List.ofSeq
+    let loop = seq {while true do yield! Day01Input.dataLines} |> Seq.take 1000000 |> List.ofSeq
     let result2 = findFirstDoubleFreq {Sum=0;PastFreqs=Set.empty} loop
     printfn "Part Two Result: %i" result2
-    0 // return an integer exit code

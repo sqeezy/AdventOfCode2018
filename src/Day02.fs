@@ -1,4 +1,5 @@
 ﻿// Learn more about F# at http://fsharp.org
+module Day02
 
 open System
 
@@ -43,8 +44,6 @@ let solvePartTwo (list : string list) = cartesianProduct list list
                                             |> Array.ofSeq 
                                             |> System.String
 
-[<EntryPoint>]
-let main argv =
-    printfn "Part One Result: %d" (solvePartOne Input.dataLines)
-    printfn "Part Two Result: %A" (solvePartTwo Input.dataLines )
-    0 // return an integer exit code
+let solve =
+    printfn "Part One Result: %d" (solvePartOne Day02Input.dataLines)
+    printfn "Part Two Result: %A" (solvePartTwo Day02Input.dataLines )

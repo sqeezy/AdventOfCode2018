@@ -1,5 +1,4 @@
-[<AutoOpen>]
-module Input
+module Day02Input
 
 open System
 let data = @"rvefnvyxzbodgpnpkumawhijsc

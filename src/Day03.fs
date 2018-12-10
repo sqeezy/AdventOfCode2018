@@ -1,4 +1,5 @@
 ﻿// Learn more about F# at http://fsharp.org
+module Day03
 
 open System
 
@@ -30,9 +31,5 @@ let field = cartesianProduct x x
 let positionsOfClaim {LeftDist = ld; TopDist = td; Width = w; Height   = h;} =
     cartesianProduct [ld .. w] [td .. h]
 
-[<EntryPoint>]
-let main argv =
-
-    printfn "%A" (Input.dataLines |> Seq.map parseClaim)
-
-    0 // return an integer exit code
+let solve =
+    printfn "%A" (Day03Input.dataLines |> Seq.map parseClaim)

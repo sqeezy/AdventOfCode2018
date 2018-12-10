@@ -1,5 +1,4 @@
-[<AutoOpen>]
-module Input
+module Day01Input
 
 open System
 let data = @"+16

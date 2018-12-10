@@ -1,5 +1,4 @@
-[<AutoOpen>]
-module Input
+module Day03Input
 
 open System
 let data = @"#1 @ 565,109: 14x24
