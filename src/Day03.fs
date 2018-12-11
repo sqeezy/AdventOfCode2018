@@ -30,17 +30,21 @@ let field = cartesianProduct positionRange positionRange
                 |> List.map (fun p -> (p, 0))
                 |> Map.ofList
 
-let positionsOfClaim {LeftDist = ld; TopDist = td; Width = w; Height   = h;} =
+let positionsOfClaim {LeftDist = ld; TopDist = td; Width = w; Height = h;} =
     cartesianProduct [ld .. w] [td .. h]
 
-let applyClaimPositionToField (field : Field) pos = Map.add pos (field.[pos]) field
+let applyClaimPositionToField (field : Field) pos = Map.add pos (field.[pos]+1) field
 
 let applyClaimPositionsToField (field : Field) claim = claim
                                                         |> positionsOfClaim
                                                         |> List.fold applyClaimPositionToField field
 let solvePartOne lines = lines
                             |> List.map parseClaim
+                            |> Inspect
                             |> List.fold applyClaimPositionsToField field
+                            |> Inspect
+                            |> Map.filter (fun _ claims -> claims > 1)
+                            |> Map.count
 let solve =
     printHeader 3 1
     printfn "%A" (solvePartOne Day03Input.dataLines)
