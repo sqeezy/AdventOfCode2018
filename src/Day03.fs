@@ -38,11 +38,20 @@ let applyClaimPositionToField (field : Field) pos =
 let applyClaimPositionsToField (field : Field) claim = claim
                                                         |> positionsOfClaim
                                                         |> List.fold applyClaimPositionToField field
-let solvePartOne lines = lines
-                            |> List.map parseClaim
-                            |> List.fold applyClaimPositionsToField initField
-                            |> Map.filter (fun _ claims -> claims > 1)
-                            |> Map.count
+
+let claimValid (field:Field) (claim:Claim) =
+    let positions = claim |> positionsOfClaim
+    List.forall (fun p -> field.[p] < 2) positions
+
+let solveBoth lines = 
+    let claims = lines |> List.map parseClaim
+    let fieldWithClaims = claims |> List.fold applyClaimPositionsToField initField
+    let overusedFieldSectionsNum = fieldWithClaims |> Map.filter (fun _ claims -> claims > 1) |> Map.count
+    let validClaimId = (claims |> List.filter (claimValid fieldWithClaims) |> List.head).ID
+    (overusedFieldSectionsNum, validClaimId)
 let solve =
+    let (r1, r2) = (solveBoth Day03Input.dataLines) 
     printHeader 3 1
-    printfn "%A" (solvePartOne Day03Input.dataLines)
+    printfn "%A" r1
+    printHeader 3 2
+    printfn "%A" r2
