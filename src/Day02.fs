@@ -34,8 +34,7 @@ let differentByOne (a, b) =
     | _ -> None
 
 let solvePartTwo (list : string list) = cartesianProduct list list
-                                            |> Seq.map    (fun (a, b) -> (a.ToCharArray(), b.ToCharArray()))
-                                            |> Seq.map    differentByOne
+                                            |> Seq.map    ((fun (a, b) -> (a.ToCharArray(), b.ToCharArray() ))  >> differentByOne)
                                             |> Seq.filter Option.isSome
                                             |> Seq.head 
                                             |> Option.get 
