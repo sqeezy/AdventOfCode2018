@@ -3,7 +3,7 @@ module Day03
 
 open System
 
-let sizeOfField = 1000
+let sizeOfCloth = 1000
 
 type Claim = {
     ID       : int;
@@ -14,7 +14,7 @@ type Claim = {
 }
 
 type Position = (int * int)
-type Field = Map<Position, int>
+type Cloth = Map<Position, int>
 
 let claimOfArray (arr: int array) = {ID = arr.[0]; LeftDist=arr.[1]; TopDist=arr.[2]; Width=arr.[3]; Height=arr.[4]}
 
@@ -25,33 +25,33 @@ let parseClaim (s:string) = s.Split [|'#'; '@';' '; ','; 'x'; ':'|]
 
 let positionRange = [0 .. 1000]
 
-let initField = cartesianProduct positionRange positionRange 
+let initCloth = cartesianProduct positionRange positionRange 
                 |> List.map (fun p -> (p, 0))
                 |> Map.ofList
 
 let positionsOfClaim {LeftDist = ld; TopDist = td; Width = w; Height = h;} =
     cartesianProduct [ld .. (ld+w - 1)] [td .. (td+h - 1)]
 
-let applyClaimPositionToField (field : Field) pos =
-    Map.add pos (field.[pos]+1) field
+let applyClaimPositionToCloth (cloth : Cloth) pos =
+    Map.add pos (cloth.[pos]+1) cloth
 
-let applyClaimPositionsToField (field : Field) claim = claim
+let applyClaimPositionsToCloth (cloth : Cloth) claim = claim
                                                         |> positionsOfClaim
-                                                        |> List.fold applyClaimPositionToField field
+                                                        |> List.fold applyClaimPositionToCloth cloth
 
-let claimValid (field:Field) (claim:Claim) =
+let claimValid (cloth:Cloth) (claim:Claim) =
     let positions = claim |> positionsOfClaim
-    List.forall (fun p -> field.[p] < 2) positions
+    List.forall (fun p -> cloth.[p] < 2) positions
 
 let solveBoth lines = 
     let claims = lines |> List.map parseClaim
-    let fieldWithClaims = claims |> List.fold applyClaimPositionsToField initField
-    let overusedFieldSectionsNum = fieldWithClaims |> Map.filter (fun _ claims -> claims > 1) |> Map.count
-    let validClaimId = (claims |> List.filter (claimValid fieldWithClaims) |> List.head).ID
-    (overusedFieldSectionsNum, validClaimId)
+    let clothWithClaims = claims |> List.fold applyClaimPositionsToCloth initCloth
+    let overusedClothSquareInchesAmount = clothWithClaims |> Map.filter (fun _ claims -> claims > 1) |> Map.count
+    let validClaimId = (claims |> List.filter (claimValid clothWithClaims) |> List.head).ID
+    (overusedClothSquareInchesAmount, validClaimId)
 let solve =
     let (r1, r2) = (solveBoth Day03Input.dataLines) 
     printHeader 3 1
-    printfn "%A" r1
+    printfn "%i" r1
     printHeader 3 2
-    printfn "%A" r2
+    printfn "%i" r2
