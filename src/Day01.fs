@@ -17,13 +17,15 @@ let addLineToSum sum line =
 
 type State = {Sum : int; PastFreqs : Set<int>}
 
-let rec findFirstDoubleFreq {Sum=sum;PastFreqs = pastFreqs} currentLines =
-    let line :: lines = currentLines
-    let nextFreq = addLineToSum sum line
-    if Set.contains nextFreq pastFreqs then nextFreq
-    else 
-        let newPastFreqs = Set.add nextFreq pastFreqs
-        findFirstDoubleFreq {Sum=nextFreq; PastFreqs= newPastFreqs } lines
+let rec findFirstDoubleFreq {Sum = sum; PastFreqs = pastFreqs} currentLines =
+    match currentLines with
+    | line :: remainingLines -> 
+        let nextFreq = addLineToSum sum line
+        if Set.contains nextFreq pastFreqs then nextFreq
+        else 
+            let newPastFreqs = Set.add nextFreq pastFreqs
+            findFirstDoubleFreq {Sum=nextFreq; PastFreqs= newPastFreqs } remainingLines
+    | _ -> raise (Exception("Challange states this never happens!"))
 
 let solve =
     let result1 = Day01Input.dataLines |> Seq.fold addLineToSum 0

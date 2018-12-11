@@ -1,5 +1,4 @@
 module Day04Input
-open Day01Input
 
 let private data = "[1518-03-25 00:01] Guard #743 begins shift
 [1518-09-15 00:34] falls asleep
