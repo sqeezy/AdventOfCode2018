@@ -30,7 +30,7 @@ let initField = cartesianProduct positionRange positionRange
                 |> Map.ofList
 
 let positionsOfClaim {LeftDist = ld; TopDist = td; Width = w; Height = h;} =
-    cartesianProduct [ld .. (ld+w)] [td .. (td+h)]
+    cartesianProduct [ld .. (ld+w - 1)] [td .. (td+h - 1)]
 
 let applyClaimPositionToField (field : Field) pos =
     Map.add pos (field.[pos]+1) field
