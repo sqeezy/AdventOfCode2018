@@ -17,8 +17,6 @@ let solvePartOne list =
     let threes = twosAndThreesPresentPerLine |> Seq.filter (fun (_, b) -> b) |> Seq.length
     twos * threes
 
-let cartesianProduct n g = List.map (fun (n,g)->[n;g]) (List.allPairs n g)
-
 let differentByOne (a, b) = 
     let compareElementwise = Seq.zip a b 
                               |> Seq.map (fun (a,b)-> if a=b then Some a else None)
@@ -36,7 +34,7 @@ let differentByOne (a, b) =
     | _ -> None
 
 let solvePartTwo (list : string list) = cartesianProduct list list
-                                            |> Seq.map    (fun l -> (l.[0].ToCharArray(), l.[1].ToCharArray()))
+                                            |> Seq.map    (fun (a, b) -> (a.ToCharArray(), b.ToCharArray()))
                                             |> Seq.map    differentByOne
                                             |> Seq.filter Option.isSome
                                             |> Seq.head 
@@ -45,5 +43,7 @@ let solvePartTwo (list : string list) = cartesianProduct list list
                                             |> System.String
 
 let solve =
-    printfn "Part One Result: %A" (solvePartOne Day02Input.dataLines)
-    printfn "Part Two Result: %A" (solvePartTwo Day02Input.dataLines )
+    printHeader 2 1
+    printfn "%A" (solvePartOne Day02Input.dataLines)
+    printHeader 2 2
+    printfn "%A" (solvePartTwo Day02Input.dataLines )

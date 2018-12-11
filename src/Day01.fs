@@ -27,8 +27,10 @@ let rec findFirstDoubleFreq {Sum=sum;PastFreqs = pastFreqs} currentLines =
 
 let solve =
     let result1 = Day01Input.dataLines |> Seq.fold addLineToSum 0
-    printfn "Part One Result: %i" result1
+    printHeader 1 1
+    printfn "%i" result1
 
     let loop = seq {while true do yield! Day01Input.dataLines} |> Seq.take 1000000 |> List.ofSeq
     let result2 = findFirstDoubleFreq {Sum=0;PastFreqs=Set.empty} loop
-    printfn "Part Two Result: %i" result2
+    printHeader 1 2
+    printfn "%i" result2
