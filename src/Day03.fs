@@ -2,7 +2,6 @@
 module Day03
 
 open System
-open Day02
 
 let sizeOfField = 1000
 
@@ -24,25 +23,24 @@ let parseClaim (s:string) = s.Split [|'#'; '@';' '; ','; 'x'; ':'|]
                                 |> Array.map int
                                 |> claimOfArray
 
-let positionRange = [1 .. 1000]
+let positionRange = [0 .. 1000]
 
-let field = cartesianProduct positionRange positionRange 
+let initField = cartesianProduct positionRange positionRange 
                 |> List.map (fun p -> (p, 0))
                 |> Map.ofList
 
 let positionsOfClaim {LeftDist = ld; TopDist = td; Width = w; Height = h;} =
-    cartesianProduct [ld .. w] [td .. h]
+    cartesianProduct [ld .. (ld+w)] [td .. (td+h)]
 
-let applyClaimPositionToField (field : Field) pos = Map.add pos (field.[pos]+1) field
+let applyClaimPositionToField (field : Field) pos =
+    Map.add pos (field.[pos]+1) field
 
 let applyClaimPositionsToField (field : Field) claim = claim
                                                         |> positionsOfClaim
                                                         |> List.fold applyClaimPositionToField field
 let solvePartOne lines = lines
                             |> List.map parseClaim
-                            |> Inspect
-                            |> List.fold applyClaimPositionsToField field
-                            |> Inspect
+                            |> List.fold applyClaimPositionsToField initField
                             |> Map.filter (fun _ claims -> claims > 1)
                             |> Map.count
 let solve =
