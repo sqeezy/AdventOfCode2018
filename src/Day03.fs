@@ -46,7 +46,7 @@ let claimValid (cloth:Cloth) (claim:Claim) =
 let solveBoth lines = 
     let claims = lines |> List.map parseClaim
     let clothWithClaims = claims |> List.fold applyClaimPositionsToCloth initCloth
-    let overusedClothSquareInchesAmount = clothWithClaims |> Map.filter (fun _ claims -> claims > 1) |> Map.count
+    let overusedClothSquareInchesAmount = clothWithClaims |> Map.filter (fun _ cs -> cs > 1) |> Map.count
     let validClaimId = (claims |> List.filter (claimValid clothWithClaims) |> List.head).ID
     (overusedClothSquareInchesAmount, validClaimId)
 let solve =
